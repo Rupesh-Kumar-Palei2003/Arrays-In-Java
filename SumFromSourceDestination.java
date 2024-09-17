@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class SumFromSourceDestination {
     public static void printArray(int[] nums){
         System.out.print("[ ");
-        for(int i=1; i<=nums.length; i++){
-            System.out.print(nums[i]+" , ");
+        for(int i=1; i<nums.length; i++){
+            System.out.print(nums[i]+" ,");
         }
         System.out.println(" ]");
     }
@@ -25,15 +25,15 @@ public class SumFromSourceDestination {
         return sum;
     }
     // Best Approach
-    public static void makePrefixSum(int[] arr){
+    public static int[] makePrefixSum(int[] arr){
         int sum =0;
-        for(int i=1; i<=arr.length; i++){
+        for(int i=1; i<arr.length; i++){
             sum = sum + arr[i];
             arr[i] = sum;
         }
+        return arr;
     }
     public static int sumOfStartToEnd(int[] arr, int start, int destination){
-        makePrefixSum(arr);
         return arr[destination] - arr[start-1];
     }
     public static void main(String[] args) {
@@ -42,22 +42,21 @@ public class SumFromSourceDestination {
         int size = scanner.nextInt();
         int[] arr = new int[size+1];
         System.out.println("enter the element");
-        for(int i=1; i<= arr.length; i++){
+        for(int i=1; i<= size; i++){
             arr[i] = scanner.nextInt();
         }
-        System.out.print("Array is : ");
+        System.out.println("Array is : ");
         printArray(arr);
         System.out.println("enter how many times do you want to sum");
         int wantTime = scanner.nextInt();
         int i=0;
-        while(i< wantTime){
+        int[] prefixSum = makePrefixSum(arr);
+        while(i++ < wantTime){
             System.out.println("enter source : ");
             int source = scanner.nextInt();
             System.out.println("enter destination : ");
             int destination = scanner.nextInt();
-            System.out.println("sum from source to destination : "+sumOfStoD(arr, source, destination));
-            System.out.println("sum from start to end : "+sumOfStartToEnd(arr, source, destination));
-            i++;
+            System.out.println("sum from start to end : "+sumOfStartToEnd(prefixSum, source, destination));
         }
 
     }
